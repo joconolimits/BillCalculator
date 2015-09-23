@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>Калкулатор</title>
+		<meta name="description" content="Utility bill calculator" />
+		<meta name="author" content="Jordan" />
+		<link rel="shortcut icon" href="favicon.png"> 
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+		<!-- bootstrap Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">  
+		<!-- My custom css  -->
+		<link href="css/custom.css" rel="stylesheet">  
+		<!-- Social Icons-->
+		<link href="css/social.css" rel="stylesheet">
+		<!-- JQUERY UI theme -->
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+		<!-- Font awesome-->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		 
+		<script src="JS/modernizr.custom.js"></script>
+	</head>
+	<body>
+		<div class="container">	
+			<div id="bl-main" class="bl-main">
+				<section>
+					<div class="bl-box icon">
+						<h2><i class="fa fa-bolt fa-4x"></i></br></br>Пресметaj струја</h2>
+					</div>
+					<div class="bl-content">
+						<div id="electricity" class="panel panel-default">  <!-- Electricity starts from here -->
+							<div class="panel-heading">
+								<h1 class="text-center"> Пресметка на струја </h1>
+							</div>
+							<div class="panel-body">
+								<div >
+									<button class="btn btn-success show-inline" id="oneTarif" >Едно тарифно броило</button>
+									
+									<button class="btn btn-success show-inline" id="twoTarif" >Дво тарифно броило</button>
+								</div>
+							</div>
+							
+							<div id="oneTarifCalc" class="panel-body" >  <!-- This is the form for the one tarif calculation -->
+								<div class="form-group">
+									<label for="first" class="col-sm-2 control-label">Почетна состојба</label>
+									<div class="col-sm-10">
+										<input
+											title="Во ова поле треба да ја внесете вредноста отчитана од мерачот на почетокот од месецот."
+											step="any" id="first" min="1" class="form-control" placeholder="kwh" tabindex="1" required />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="last" class="col-sm-2 control-label">Крајна состојба</label>
+									<div class="col-sm-10">
+										<input  
+											title="Во ова поле треба да ја внесете вредноста отчитана од мерачот на крајот од месецот."
+											step="any" id="last" min="1" class="form-control" placeholder="kwh" tabindex="2" required />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="price" class="col-sm-2 control-label">Цена на киловат/час </label>
+									<div class="col-sm-10">
+										<input
+											title="Во ова поле треба да ја внесете средната цена за киловат/час електрична енергија."
+											step="any" id="price" min="1" class="form-control" value="4.48" tabindex="5" required />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="users" class="col-sm-2 control-label">Контролни броила</label>
+									<div class="col-sm-10">
+										<input
+											title="Во ова поле треба да го внесете бројот на контролни броила."
+											id="users" min="0" class="form-control" placeholder="броила" tabindex="3" required />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<button id="calcOneTarif" type="submit" class="btn btn-success" tabindex="4" >Пресметај</button>
+									</div>
+								</div>
+							</div>
+						
+							<!-- This is the form for the two tariff calculation -->
+							<div id="twoTarifCalc" class="panel-body">
+								<!-- the form for  entering the high tarif data-->
+								<div id="Vt">  
+									<div class="panel-heading">
+										<h4 class=" text-center panel-title">Внесете ги податоците за скапата тарифа:</h4>
+									</div>
+									
+									<div class="form-group">
+										<label for="firstVt" class="col-sm-2 control-label">Почетна состојба</label>
+										<div class="col-sm-10">
+											<input
+												title="Во ова поле треба да ја внесете вредноста за скапата тарифа отчитана од мерачот на почетокот од месецот."
+												step="any" id="firstVt" min="1" class="form-control" tabindex="6" placeholder="kwh">
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label for="lastVt" class="col-sm-2 control-label">Крајна состојба</label>
+										<div class="col-sm-10">
+											<input
+												title="Во ова поле треба да ја внесете вредноста за скапата тарифа отчитана од мерачот на крајот од месецот."
+												step="any" id="lastVt" min="1" class="form-control" tabindex="7" placeholder="kwh">
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label for="priceVt" class="col-sm-2 control-label">Цена на киловат/час </label>
+										<div class="col-sm-10">
+											<input
+												title="Во ова поле е внесена цената за киловат/час електрична енергија во скапата тарифа."
+												step="any" id="priceVt" min="1" class="form-control" tabindex="12" value="5.59">
+										</div>
+									</div>
+
+								</div>
+								<!-- the form for  entering the low tarif data-->
+								<div id="Nt">
+									<div class="panel-heading">
+										<h4 class=" text-center panel-title">Внесете ги податоците за евтината тарифа:</p>
+									</div>
+
+									<div class="form-group">
+										<label for="firstNt" class="col-sm-2 control-label">Почетна состојба</label>
+										<div class="col-sm-10">
+											<input
+												title="Во ова поле треба да ја внесете вредноста за евтината тарифа отчитана од мерачот на почетокот од месецот."
+												step="any" id="firstNt" min="1" class="form-control" tabindex="8" placeholder="kwh">
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label for="lastNt" class="col-sm-2 control-label">Крајна состојба</label>
+										<div class="col-sm-10">
+											<input
+												title="Во ова поле треба да ја внесете вредноста за евтината тарифа отчитана од мерачот на крајот од месецот."
+												step="any" id="lastNt" min="1" class="form-control" tabindex="9" placeholder="kwh">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="priceNt" class="col-sm-2 control-label">Цена на киловат/час </label>
+										<div class="col-sm-10">
+											<input
+												title="Во ова поле е внесена цената за киловат/час електрична енергија во евтината тарифа."
+												step="any" id="priceNt" min="1" class="form-control" tabindex="13" value="2.8">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="usersTwoTarif" class="col-sm-2 control-label">Контролни броила</label>
+										<div class="col-sm-10">
+											<input
+												title="Во ова поле треба да го внесете бројот на контролни броила."
+												id="usersTwoTarif" min="0" class="form-control" tabindex="10" placeholder="броила">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="col-sm-offset-2 col-sm-10">
+											<button id="calcTwoTarif" type="submit" class="btn btn-success" tabindex="11">Пресметај</button>
+										</div>
+									</div>							
+								</div>   <!-- the form for entering the low tarif data ends here-->
+							</div> <!-- two tariff calculation form ends here-->
+						
+							<div id="result" class="panel-body" >  <!-- Dysplay the result and ask to record it. -->
+
+								<div class="form-group">
+									<label for="usedKwh" class="col-sm-2 control-label">Потрошена ел. енергија: </label>
+									<div class="col-sm-10">
+										<input
+											title="Во ова поле е внесен бројот на потрошени киловат/часови електрична енергија. 
+													Доколку ја промените оваа вредност, соодветно променете ја вредноста во следното поле.
+													Иако менувањето на оваа вредност не се препорачува."
+											id="usedKwh" class="form-control" required />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="toPay" class="col-sm-2 control-label">Вкупна цена: </label>
+									<div class="col-sm-10">
+										<input
+											title="Во ова поле е внесена вкупната сума која треба да ја платите за пресметаната сметка.
+													Доколку ја промените оваа вредност, соодветно променете ја вредноста во следното поле.
+													Иако менувањето на оваа вредност не се препорачува."
+											id="toPay" class="form-control" required />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="date" class="col-sm-2 control-label">Месец</label>
+									<div class="col-sm-10">
+										<input 
+											title="Одберете го месецот за кој ја правите пресметката."
+											id="date" class="form-control" placeholder="месец/година  со бројки: yyyy/mm/dd" required />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<button id="save" type="submit" class="btn btn-success" >Зачувај</button>
+									</div>
+								</div>
+							</div> <!-- the result dysplay ends here -->
+						</div>  <!-- Electricity ends here -->
+					</div>
+					<span class="bl-icon bl-icon-close fa fa-home"></span>
+				</section>
+				
+				<section id="bl-work-section">
+					<div class="bl-box">
+						<h2><i class="fa fa-tint fa-4x"></i></br></br>Пресметaj вода</h2>
+					</div>
+					<div class="bl-content">  <!-- Water calculation starts here -->
+						<div id="water" class="panel panel-default"> 
+							<div class="panel-heading">
+								<h1 class="text-center ">Пресметка на вода</h1>
+							</div>
+							<div id="inputWater" class="panel-body">
+								<div class="panel-heading">
+									<h4 class=" text-center panel-title">Форма за калкулација на вода</h4>
+								</div>
+									
+								<div class="form-group">
+									<label for="old" class="col-sm-2 control-label">Почетна состојба</label>
+									<div class="col-sm-10">
+										<input
+											title="Во ова поле треба да ја внесете вредноста отчитана од мерачот за вода на почетокот од месецот."
+											id="old" min="1" class="form-control" tabindex="14" placeholder="m3" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="new" class="col-sm-2 control-label">Крајната состојба</label>
+									<div class="col-sm-10">
+										<input  
+											title="Во ова поле треба да ја внесете вредноста отчитана од мерачот за вода на почетокот од месецот."
+											id="new" min="1" class="form-control" tabindex="15" placeholder="m3" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="waterPrice" class="col-sm-2 control-label">Цена на м<sup>3</sup> вода</label>
+									<div class="col-sm-10">
+										<input
+											title="Во ова поле е внесена цената за метар кубен потрошено количество на вода."
+											step="any" id="waterPrice" min="1" class="form-control" tabindex="18" value="29.39" />
+									</div>
+								</div>
+								
+								<div class="panel-heading">
+									<h4 class="text-center panel-title " >Форма за калкулација на комуналии</h4>
+								</div>
+								
+								<div class="form-group">
+									<label for="areaPrice" class="col-sm-2 control-label">Цена за комуналии</label>
+									<div class="col-sm-10">
+										<input
+										title="Во ова поле е внесена цената за комуналии по метар квадратен."
+										id="areaPrice" min="1" class="form-control" tabindex="19" value="3.59" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="area" class="col-sm-2 control-label">Површина</label>
+									<div class="col-sm-10">
+										<input
+										title="Во ова поле треба да ја внесете површината просторот кој го имате на располагање."
+										id="area" min="1" class="form-control" tabindex="16" placeholder="m2"/>
+									</div>
+								</div>
+									
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<button id="calcWater" type="submit" class="btn btn-success" tabindex="17" >Пресметај</button>
+									</div>
+								</div>	
+							</div> <!-- input of data for water calculation ends here -->
+							
+							<div id="resultWater" class="panel-body" >  <!-- Dysplay the result and ask to record it. -->
+								
+								<div class="form-group">
+									<label for="m3" class="col-sm-2 control-label">Потрошено количество вода: </label>
+									<div class="col-sm-10">
+										<input
+										title="Во ова поле е внесен бројот на потрошени метри кубни количество на вода. 
+												Доколку ја промените оваа вредност, соодветно променете ја вредноста во следното поле.
+												Иако менувањето на оваа вредност не се препорачува."
+										id="m3" class="form-control" />
+									</div>
+								</div>
+						
+								<div class="form-group">
+									<label for="totalWater" class="col-sm-2 control-label">Вкупна цена: </label>
+									<div class="col-sm-10">
+										<input
+										title="Во ова поле е внесена вкупната сума која треба да ја платите за пресметаната сметка.
+												Доколку ја промените оваа вредност, соодветно променете ја вредноста во следното поле.
+												Иако менувањето на оваа вредност не се препорачува."
+										id="totalWater" class="form-control"/>
+									</div>
+								</div>
+						
+								<div class="form-group">
+									<label for="dateWater" class="col-sm-2 control-label">Месец</label>
+									<div class="col-sm-10">
+										<input 
+										title="Одберете го месецот за кој ја правите пресметката."
+										id="dateWater" class="form-control" placeholder="месец/година  со бројки: yyyy/mm/dd" />
+									</div>
+								</div>
+							
+							
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<button class="btn btn-success" id="saveWater" >Зачувај</button>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<button class="btn btn-success" id="backWater" >Повторна калкулација</button>
+									</div>
+								</div>	
+							
+							</div> <!-- End of the display result block -->
+						</div> <!-- End of the water calculation block. -->
+					</div> <!-- The block for water will end here -->
+					<span class="bl-icon bl-icon-close fa fa-home"></span>
+				</section>
+				
+				<section>
+					<div class="bl-box">
+						<h2><i class="fa fa-database fa-4x"></i></br></br>Генерирај извештај</h2>
+					</div>
+					<div class="bl-content">
+						<div id="reports" class="panel panel-default"> 
+							<div class="panel-heading">
+								<h1 class="text-center ">Преглед на извештаи: </h1>
+							</div>
+							<div class="panel-body">
+								<div class="form-group show-inline">
+									<label for="from" class="col-sm-2 control-label">Од дата: </label>
+									<div class="col-sm-10">
+										<input id="from" class="form-control"  placeholder="yyyy/mm/dd"  data-provide="datepicker" />
+									</div>
+								</div>
+						
+								<div class="form-group show-inline">
+									<label for="to" class="col-sm-2 control-label">До дата: </label>
+									<div class="col-sm-10">
+										<input id="to" class="form-control" placeholder="yyyy/mm/dd" />
+									</div>
+								</div>	
+								</br>
+								
+								<div class="text-center">
+									<button id="waterReport" type="submit" class="btn btn-success report show-inline " >Извештај за вода</button>
+									<button id="elReport" type="submit" class="btn btn-success report show-inline " >Извештај за Струја</button>
+								</div>
+								</br>
+								<div id="reportTable" class="table-responsive">&nbsp</div> <!-- The report results are displayed here -->
+								</br>
+								<div class="text-center">
+									<p>Бришење на сите претходно внесени пресметки:</p>
+									<button id="dropWater" type="submit" class="btn btn-success show-inline " >Избриши податоци за вода</button>
+									<button id="dropElectricity" type="submit" class="btn btn-success show-inline " >Избриши податоци за струја</button>
+								</div>	
+							</div>
+						</div>	<!-- end of the reports block -->	
+					</div> <!-- The reports block will end here -->
+					<span class="bl-icon bl-icon-close fa fa-home"></span>
+				</section>
+				
+				<section>
+					<div class="bl-box">
+						<h2><i class="fa fa-share-square-o fa-3x"></i></br>Инфо. </h2> <!-- class="bl-icon bl-icon-contact"-->
+					</div>
+					<div class="bl-content">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h1 class="text-center ">Информации</h1>
+							</div>
+							<div class="panel-body">
+								<p class="text-center">
+									Овој  калкулатор е изработен со цел да им помогне на корисниците кој користат контролни броила полесно да ја пресметаат цената
+									на нивната потрошена енергија и вода. Калкулаторот исто така нуди можност пресметаните вредности да бидат зачувани, 
+									со што корисниците	би можеме да ги проверат своите изминати трошоци за даден временски период.								
+								</p>
+								<p class="text-center">
+									За било какви забелешки и идеи  контактирајте ме на: <a href="mailto: joconolimits@gmail.com">joconolimits@gmail.com</a> 
+								</p>
+							</div>
+							<blockquote class="blockquote-reverse">	
+								<!-- Twitter -->
+								<a href="http://twitter.com/home?status=" title="Share on Twitter" target="_blank" class="btn btn-twitter"><i class="fa fa-twitter"></i> Twitter</a>
+								<!-- Facebook -->
+								<a href="https://www.facebook.com/sharer/sharer.php?u=" title="Share on Facebook" target="_blank" class="btn btn-facebook"><i class="fa fa-facebook"></i> Facebook</a>
+								<!-- Google+ -->
+								<a href="https://plus.google.com/share?url=" title="Share on Google+" target="_blank" class="btn btn-googleplus"><i class="fa fa-google-plus"></i> Google+</a>
+								<!-- LinkedIn --> 
+								<a href="http://www.linkedin.com/shareArticle?mini=true&url=&title=&summary=" title="Share on LinkedIn" target="_blank" class="btn btn-linkedin"><i class="fa fa-linkedin"></i> LinkedIn</a>
+								<footer> Made By Jordan</footer>
+							</blockquote>
+						</div>
+					</div>
+					<span class="bl-icon bl-icon-close fa fa-home"></span>
+				</section>
+			</div>
+		</div><!-- /container -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="JS/boxlayout.js"></script>
+		<!-- script for the date picker -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+		<!-- html5sql.js library -->
+		<script src="JS/html5sql.js"></script>
+		
+		<script src="JS/calcElectricity.js"></script> <!-- js for the electricity calculations -->
+		<script src="JS/calcWater.js"></script>  <!-- js for the water calculations -->
+		<script src="JS/validation_tooltip.js"></script>  <!--input validation -->
+		<script src="JS/reports.js"></script>  <!-- js for the report generation -->
+		
+		<script>
+			$(function() {
+				Boxlayout.init();
+			});
+		</script>
+	</body>
+</html>
